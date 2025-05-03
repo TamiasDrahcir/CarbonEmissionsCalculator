@@ -7777,7 +7777,7 @@ def listify(string):
     return [array[0][array[0].find(">")+1:],int(array[-1].replace("km ",'')) if (array[-1] != '') else (0)]
 def finddist(start,end,identification):
     url = "https://skb.gaotie.cn/checi.asp?checi="+identification
-    text = requests.get(url,headers=headers).text
+    text = requests.get(url,headers=headers,proxies={}).text
     soup = BeautifulSoup(text,"lxml")
     table_rows = soup.find_all('tr')
     station_rail = []
@@ -7794,7 +7794,7 @@ def SARCEC(transportation,preset,start,end,identification):
                     start_1 = start[:3]
                     end_1 = end[:3]
                     url1 = "https://airport.globefeed.com/Distance_Between_Airports_Result.asp?from="+start_1+"&to="+end_1
-                    request1 = requests.get(url1,headers=headers)
+                    request1 = requests.get(url1,headers=headers,proxies={})
                     start2 = "<span id=\"straightDist\"><br>Kilometers: <b>"
                     end2 = "km.</b>, Miles: <b>"
                     text1 = request1.text
@@ -7804,7 +7804,7 @@ def SARCEC(transportation,preset,start,end,identification):
                         distance = float(text1[text1.find(start2)+len(start2):text1.find(end2)])
                         if identification != "":
                             url_search = "https://www.google.com.hk/search?q=%22"+identification+"%22+site+https%3A%2F%2Fwww.flightaware.com"
-                            text = requests.get(url_search,headers=headers).text
+                            text = requests.get(url_search,headers=headers,proxies={}).text
                             text = text[text.find("<div class=\"dURPMd\""):text.find("<div id=\"bottomads\"")]
                             soup = BeautifulSoup(text,"lxml")
                             url_list = []
@@ -7823,7 +7823,7 @@ def SARCEC(transportation,preset,start,end,identification):
                                         url_index += 1
                                     else:
                                         url2 = url_list[url_index]
-                                        response = requests.get(url2,headers=headers).text
+                                        response = requests.get(url2,headers=headers,proxies={}).text
                                         if "FlightAware couldn't find flight tracking data" in response:
                                             url_index += 1
                                         else:
@@ -7867,7 +7867,7 @@ def SARCEC(transportation,preset,start,end,identification):
                 start = encode(start)
                 end = encode(end)
                 url = 'https://shike.gaotie.cn/mlieche.asp?from='+start+'&to='+end
-                text = requests.get(url,headers=headers).text
+                text = requests.get(url,headers=headers,proxies={}).text
                 soup = BeautifulSoup(text,'lxml')
                 table_data = soup.find_all("td")
                 dists = []
